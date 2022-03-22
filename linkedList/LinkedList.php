@@ -10,6 +10,7 @@ class LinkedList
 {
     private Node|null $tail = null;
     private Node|null $head = null;
+    private $count = 0;
 
     // O(1)
     private function isEmpty()
@@ -28,6 +29,8 @@ class LinkedList
             $this->tail->next = $node;
             $this->tail = $node;
         }
+
+        $this->count++;
     }
 
     // O(1)
@@ -41,6 +44,8 @@ class LinkedList
             $node->next = $this->head;
             $this->head = $node;
         }
+
+        $this->count++;
     }
 
     // O(n)
@@ -53,25 +58,32 @@ class LinkedList
         $node = $this->tail;
 
         // there is only one item
-        if($this->tail === $this->head) {
+        if($this->count === 1) {
             $this->head = $this->tail = null;
-
-            return $node->data;
+        } else {
+            $previous = $this->getPrevious($node);
+            $previous->next = null;
+            $this->tail = $previous;
         }
-
-        $previous = $this->getPrevious($node);
-        $previous->next = null;
-        $this->tail = $previous;
         
+        $this->count--;
+
         return $node->data;
     }
 
     // O(1)
     public function shift()
     {
+        if($this->isEmpty()) {
+            return throw new LengthException('cant shift on empty linked list!');
+        }
+
         $node = $this->head;
         $this->head = $node->next ?? null;
-        return $node->data ?? null;
+        
+        $this->count--;
+
+        return $node->data;
     }
 
     // O(n)
@@ -97,10 +109,10 @@ class LinkedList
         return -1;
     }
 
-    // O(n)
-    public function count()
+    // O(1)
+    public function size()
     {
-        return count($this->getAsArray());
+        return $this->count;
     }
 
     // O(n)

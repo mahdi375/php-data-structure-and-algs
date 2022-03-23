@@ -144,25 +144,27 @@ class LinkedList
         return throw new InvalidArgumentException('previous node not found!');
     }
 
+    // O(n)
     public function reverse()
     {
         if($this->isEmpty()) {
             return;
         }
 
-        $start = $this->tail;
-        $end = $this->head;
+        $prev = $this->head;
+        $current = $prev->next;
 
-        $node = $start;
-
-        for($i = $this->count - 1; $i >= 0; $i--) {
-            $node->next = $this->getNodeByIndex($i);
-            $node = $node->next;
+        while($current) {
+            $next = $current->next;
+            $current->next = $prev;
+            $prev = $current;
+            $current = $next;
         }
 
-        $end->next = null;
-        $this->head = $start;
-        $this->tail = $end;
+        $tail = $this->head;
+        $tail->next = null;
+        $this->head = $this->tail;
+        $this->tail = $tail;
     }
 
     private function getNodeByIndex($index)

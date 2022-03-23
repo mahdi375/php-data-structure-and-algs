@@ -9,9 +9,9 @@ $linkedList->unshift('a');
 // $linkedList->pop();
 // $linkedList->shift();
 // $linkedList->shift();
-$linkedList->reverse();
+// $linkedList->reverse();
 
-dd($linkedList->getAsArray());
+dd($linkedList->getKthFromTheEnd(1));
 dd($linkedList->size());
 dd($linkedList->pop());
 // dd($linkedList->shift());

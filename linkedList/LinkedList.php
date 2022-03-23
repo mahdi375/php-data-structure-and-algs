@@ -169,10 +169,28 @@ class LinkedList
 
     public function getKthFromTheEnd($k)
     {
-        // a -> b -> c -> d
-        $index = $this->count - $k;
+        // assume that we don't know about size of the list
+        $tail = $this->head;
+        $node = null;
+        $space = $k - 1;
+        
+        $position = 0;
+        while($tail) {
+            if($space == $position) {
+                $node = $this->head;
+            }
 
-        return $this->getNodeByIndex($index)->data;
+            if(is_null($tail->next) && !is_null($node)){
+                return $node->data;
+                break;
+            }
+
+            $node = $node->next ?? null;
+            $tail = $tail->next;
+            $position++;
+        }
+
+        throw new LengthException('out of list');
     }
 
     private function getNodeByIndex($index)

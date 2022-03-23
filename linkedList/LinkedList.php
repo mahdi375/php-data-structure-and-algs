@@ -167,6 +167,14 @@ class LinkedList
         $this->tail = $tail;
     }
 
+    public function getKthFromTheEnd($k)
+    {
+        // a -> b -> c -> d
+        $index = $this->count - $k;
+
+        return $this->getNodeByIndex($index)->data;
+    }
+
     private function getNodeByIndex($index)
     {
         $current = 0;

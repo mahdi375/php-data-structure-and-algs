@@ -143,4 +143,40 @@ class LinkedList
 
         return throw new InvalidArgumentException('previous node not found!');
     }
+
+    public function reverse()
+    {
+        if($this->isEmpty()) {
+            return;
+        }
+
+        $start = $this->tail;
+        $end = $this->head;
+
+        $node = $start;
+
+        for($i = $this->count - 1; $i >= 0; $i--) {
+            $node->next = $this->getNodeByIndex($i);
+            $node = $node->next;
+        }
+
+        $end->next = null;
+        $this->head = $start;
+        $this->tail = $end;
+    }
+
+    private function getNodeByIndex($index)
+    {
+        $current = 0;
+        $node = $this->head;
+
+        while($node) {
+            if($index == $current) {
+                return $node;
+                break;
+            }
+            $current++;
+            $node = $node->next;
+        }
+    }
 }

@@ -14,6 +14,10 @@ function reverseString($str) {
     return $newStr;
 }
 
+/** TODO:
+ * this is a long function
+ * we could separate each if clouse to function or method if there is a OOP implementaion
+ */
 function checkBalance($str) {
     $pairs = [ '[' => ']', '(' => ')', '<' => '>', '{' => '}' ];
 

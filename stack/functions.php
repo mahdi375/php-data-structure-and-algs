@@ -17,28 +17,22 @@ function reverseString($str) {
 function checkBalance($str) {
     $pairs = [ '[' => ']', '(' => ')', '<' => '>', '{' => '}' ];
 
-    $counts = array_fill(0, count($pairs), 0);
+    $stack = new Stack;
     $opens = array_keys($pairs);
     $closes = array_values($pairs);
 
     foreach(str_split($str) as $char) {
-        $index = array_search($char, $opens);
-        if($index !== false) {
-            $counts[$index]++;
+        if(in_array($char, $opens)) {
+            $stack->push($char);
         }
 
-        $index = array_search($char, $closes);
-        if($index !== false) {
-            $counts[$index]--;
-        }
-
-        if($index !== false && $counts[$index] < 0) {
-            return false;
-            break;
+        if(in_array($char, $closes)) {
+            if($pairs[$stack->pop()] !== $char) {
+                return false;
+                break;
+            }
         }
     }
 
-    $nonZiroCounts = array_filter($counts, fn($count) => $count !== 0);
-
-    return empty($nonZiroCounts);
+    return $stack->empty();
 }

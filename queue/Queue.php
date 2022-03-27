@@ -2,16 +2,27 @@
 
 class Queue
 {
-    private $items = [];
-    private $capacity = 10;
-    private $count = 0;
+    private $items;
+    private $size;
+    private $count;
+    private $front;
+    private $rear;
+
+    public function __construct(int $size)
+    {
+        $this->size = $size;
+        $this->items = new SplFixedArray($size);
+        $this->count = $this->front = $this->rear = 0;
+    }
 
     public function enqueue($item)
     {
         if($this->isFull()) {
             throw new OverflowException('queue is full');
         }
-        array_push($this->items, $item);
+        
+        $this->items->offsetSet($this->rear, $item);
+        $this->rear = ($this->rear + 1) % $this->size;
         $this->count++;
     }
 
@@ -19,16 +30,18 @@ class Queue
     {
         if($this->isEmpty()) {
             return null;
-            // throw new UnderflowException('queue is empty');
         }
 
+        $item = $this->items->offsetGet($this->front);
+        $this->front = ($this->front + 1) % $this->size;
         $this->count--;
-        return array_shift($this->items);
+
+        return $item;
     }
 
     public function isFull()
     {
-        return $this->capacity === $this->count;
+        return $this->size === $this->count;
     }
 
     public function isEmpty()
@@ -38,6 +51,6 @@ class Queue
 
     public function peek()
     {
-        return current($this->items);
+        return $this->items->offsetGet($this->front);
     }
 }

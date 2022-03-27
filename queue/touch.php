@@ -3,14 +3,13 @@
 require "./queue/Queue.php";
 // require "./queue/functions.php";
 
-$queue = new Queue;
+$queue = new Queue(10);
 
-for($i = 0; $i <= 100; $i++) {
-    if($queue->isFull()) {
-        $queue->dequeue();
-    }
+$queue->enqueue(21);
+$queue->enqueue(22);
+$queue->enqueue(23);
 
-    $queue->enqueue($i);
-}
+$queue->dequeue();
+dd($queue->dequeue());
 
-dd(array_keys($queue->peek()));
+dd($queue->peek());

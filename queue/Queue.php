@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * use when we have a resource and want to share between many consumers
+ * FIFO (First In First Out)
+ * all operations have complexity of O(1)
+ */
 class Queue
 {
     private $items;
@@ -20,7 +24,7 @@ class Queue
         if($this->isFull()) {
             throw new OverflowException('queue is full');
         }
-        
+
         $this->items->offsetSet($this->rear, $item);
         $this->rear = ($this->rear + 1) % $this->size;
         $this->count++;

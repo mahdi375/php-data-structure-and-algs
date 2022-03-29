@@ -5,7 +5,7 @@
  */
 class PriorityQueue
 {
-    public $items;
+    private $items;
     private $size;
     private $count;
 
@@ -22,6 +22,7 @@ class PriorityQueue
             throw new OverflowException('queue is full');
         }
 
+        // or can loop through from the end to the front, and shift higher items forward
         $index = $this->findIndex($priority);
         $firstPart = array_slice($this->items,0,  $index);
         $secondPart = array_slice($this->items, $index);

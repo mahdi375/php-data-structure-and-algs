@@ -1,14 +1,18 @@
 <?php
 require "./hashtable/Set.php";
 require "./hashtable/functions.php";
+require "./hashtable/HashTable.php";
 
 // dd(getFirstNonRepeatedChar("m  ahdimiahdm"));
 
 // dd(getFirstRepeatedChar(" m mahdioi"));
-$arr = [];
 
-for($i=0; $i < 60; $i++) {
-    $arr[hash_algos()[$i]] = hash(hash_algos()[$i], "mahdi");
-}
+$hashTable = new HashTable();
 
-dd($arr);
+$hashTable->put(1, "a");
+$hashTable->put(3, "b");
+$hashTable->put(21, "bar");
+$hashTable->put(11, "foo");
+// $hashTable->remove(11);
+
+dd($hashTable->get(11));

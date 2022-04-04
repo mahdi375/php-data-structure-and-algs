@@ -10,4 +10,9 @@ class BinarySearchNode
     {
         $this->value = $value;
     }
+
+    public function isLeaf()
+    {
+        return is_null($this->leftNode) && is_null($this->rightNode);
+    }
 }

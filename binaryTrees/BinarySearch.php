@@ -103,4 +103,21 @@ class BinarySearch
         echo $root->value;
     }
 
+    public function height()
+    {
+        return $this->heightRecursion($this->root);
+    }
+
+    private function heightRecursion(?BinarySearchNode $root)
+    {
+        if(is_null($root)) {
+            return -1;
+        }
+
+        if($root->isLeaf()) {
+            return 0;
+        }
+
+        return 1 + max([$this->heightRecursion($root->leftNode, $this->heightRecursion($root->rightNode))]);
+    }
 }

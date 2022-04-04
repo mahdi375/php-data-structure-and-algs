@@ -55,4 +55,52 @@ class BinarySearch
         return false;
     }
 
+    public function traversePreOrder()
+    {
+        return $this->traversePreOrderRecursion($this->root);
+    }
+
+    private function traversePreOrderRecursion(?BinarySearchNode $root)
+    {
+        if(is_null($root)) {
+            return;
+        }
+
+        echo $root->value;
+        $this->traversePreOrderRecursion($root->leftNode);
+        $this->traversePreOrderRecursion($root->rightNode);
+    }
+
+    public function traverseInOrder()
+    {
+        return $this->traverseInOrderRecursion($this->root);
+    }
+
+    private function traverseInOrderRecursion(?BinarySearchNode $root)
+    {
+        if(is_null($root)) {
+            return;
+        }
+
+        $this->traverseInOrderRecursion($root->leftNode);
+        echo $root->value;
+        $this->traverseInOrderRecursion($root->rightNode);
+    }
+
+    public function traversePostOrder()
+    {
+        return $this->traversePostOrderRecursion($this->root);
+    }
+
+    private function traversePostOrderRecursion(?BinarySearchNode $root)
+    {
+        if(is_null($root)) {
+            return;
+        }
+
+        $this->traversePostOrderRecursion($root->leftNode);
+        $this->traversePostOrderRecursion($root->rightNode);
+        echo $root->value;
+    }
+
 }

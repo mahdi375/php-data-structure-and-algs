@@ -5,7 +5,6 @@ require "./binaryTrees/BinarySearchNode.php";
 class BinarySearch
 {
     private ?BinarySearchNode $root = null;
-    private ?int $min = null;
 
     public function insert(int $value)
     {
@@ -125,8 +124,7 @@ class BinarySearch
 
     public function min()
     {
-        $this->minRecursion($this->root);
-        return $this->min;
+        return $this->minRecursion($this->root);
     }
 
     private function minRecursion(?BinarySearchNode $root)
@@ -135,15 +133,16 @@ class BinarySearch
             return;
         }
 
-        if(is_null($this->min)) {
-            $this->min = $root->value;
+        if($root->isLeaf()) {
+            return $root->value;
         }
 
-        if($root->value < $this->min) {
-            $this->min = $root->value;
-        }
+        $subTreeNonNullValues = array_filter([
+            $root->value,
+            $this->minRecursion($root->leftNode),
+            $this->minRecursion($root->rightNode)
+        ], fn($item) => !is_null($item));
 
-        $this->minRecursion($root->leftNode);
-        $this->minRecursion($root->rightNode);
+        return min($subTreeNonNullValues);
     }
 }

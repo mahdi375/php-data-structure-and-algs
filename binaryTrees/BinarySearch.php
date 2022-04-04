@@ -124,7 +124,21 @@ class BinarySearch
 
     public function min()
     {
-        return $this->minRecursion($this->root);
+        // All Binary Trees
+        // return $this->minRecursion($this->root);
+
+        // Binary Search Tree
+        $current = $this->root;
+
+        if(is_null($current)) {
+            throw new UnderflowException("empty tree");
+        }
+
+        while($current->leftNode) {
+            $current = $current->leftNode;
+        }
+
+        return $current->value;
     }
 
     private function minRecursion(?BinarySearchNode $root)

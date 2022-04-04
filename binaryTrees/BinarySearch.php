@@ -5,6 +5,7 @@ require "./binaryTrees/BinarySearchNode.php";
 class BinarySearch
 {
     private ?BinarySearchNode $root = null;
+    private ?int $min = null;
 
     public function insert(int $value)
     {
@@ -78,6 +79,7 @@ class BinarySearch
 
     private function traverseInOrderRecursion(?BinarySearchNode $root)
     {
+        // TODO: what if want to return array of nodes in order
         if(is_null($root)) {
             return;
         }
@@ -119,5 +121,29 @@ class BinarySearch
         }
 
         return 1 + max([$this->heightRecursion($root->leftNode, $this->heightRecursion($root->rightNode))]);
+    }
+
+    public function min()
+    {
+        $this->minRecursion($this->root);
+        return $this->min;
+    }
+
+    private function minRecursion(?BinarySearchNode $root)
+    {
+        if(is_null($root)) {
+            return;
+        }
+
+        if(is_null($this->min)) {
+            $this->min = $root->value;
+        }
+
+        if($root->value < $this->min) {
+            $this->min = $root->value;
+        }
+
+        $this->minRecursion($root->leftNode);
+        $this->minRecursion($root->rightNode);
     }
 }

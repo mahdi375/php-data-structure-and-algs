@@ -6,6 +6,10 @@ class BinarySearch
 {
     private ?BinarySearchNode $root = null;
 
+    public function getRoot()
+    {
+        return $this->root;
+    }
     public function insert(int $value)
     {
         $node = new BinarySearchNode($value);
@@ -158,5 +162,26 @@ class BinarySearch
         ], fn($item) => !is_null($item));
 
         return min($subTreeNonNullValues);
+    }
+
+    public function isEqual(BinarySearch $tree)
+    {
+        return $this->isEqualRecrusion($this->root, $tree->getRoot());
+    }
+
+    private function isEqualRecrusion(?BinarySearchNode $rootA, ?BinarySearchNode $rootB)
+    {
+        if(is_null($rootA) && is_null($rootB)) {
+            return true;
+        }
+        
+        if($rootA xor $rootB) {
+            return false;
+        }
+
+        return 
+            $rootA->value == $rootB->value &&
+            $this->isEqualRecrusion($rootA->leftNode, $rootB->leftNode) &&
+            $this->isEqualRecrusion($rootA->rightNode, $rootB->rightNode);
     }
 }

@@ -2,12 +2,13 @@
 
 require "./binaryTrees/BinarySearch.php";
 
-$treeA = new BinarySearch;
-$treeA->insert(4);
-$treeA->insert(2);
+$tree = new BinarySearch;
+$tree->insert(10);
+$tree->insert(7);
+$tree->insert(30);
+$tree->insert(3);
+$tree->insert(21);
+$tree->insert(8);
 
-$treeB = new BinarySearch;
-$treeB->insert(4);
-$treeB->insert(2);
 
-dd($treeA->isEqual($treeB));
+dd($tree->isBST());

@@ -184,4 +184,23 @@ class BinarySearch
             $this->isEqualRecrusion($rootA->leftNode, $rootB->leftNode) &&
             $this->isEqualRecrusion($rootA->rightNode, $rootB->rightNode);
     }
+
+    public function isBST()
+    {
+        return $this->isBSTRecursion($this->root, -INF, +INF);
+    }
+
+    private function isBSTRecursion(?BinarySearchNode $root, $min, $max)
+    {
+        if(is_null($root)) {
+            return true;
+        }
+
+        if($root->value >= $max || $root->value <= $min) {
+            return false;
+        }
+
+        return $this->isBSTRecursion($root->leftNode, $min, $root->value)
+            && $this->isBSTRecursion($root->rightNode, $root->value, $max);
+    }
 }

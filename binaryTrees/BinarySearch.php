@@ -203,4 +203,25 @@ class BinarySearch
         return $this->isBSTRecursion($root->leftNode, $min, $root->value)
             && $this->isBSTRecursion($root->rightNode, $root->value, $max);
     }
+
+    public function nodesAtDistanceOf(int $k)
+    {
+        // TODO: what if want to return nodes instead of printing them !
+        $this->nodesAtDistanceOfRecursion($this->root, $k);
+    }
+
+    private function nodesAtDistanceOfRecursion(?BinarySearchNode $root, int $distance)
+    {
+        if(is_null($root)) {
+            return;
+        }
+
+        if($distance === 0) {
+            echo $root->value."*";
+            return;
+        }
+
+        $this->nodesAtDistanceOfRecursion($root->leftNode, $distance -1);
+        $this->nodesAtDistanceOfRecursion($root->rightNode, $distance -1);
+    }
 }

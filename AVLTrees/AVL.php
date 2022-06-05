@@ -20,11 +20,13 @@ class AVL
     {
         if (is_null($root)) return new AVLNode($value);
         
-        if ($root->valueIsGreaterThan($value)) {
+        if ($root->itValueIsGreaterThan($value)) {
             $root->left = $this->insertRecursion($root->left, $value);
         } else {
             $root->right = $this->insertRecursion($root->right, $value);
         }
+
+        $root->refreshHeight();
 
         return $root;
     }

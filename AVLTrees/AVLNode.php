@@ -4,6 +4,7 @@ class AVLNode
 {   
     public ?self $left = null;
     public ?self $right = null;
+    public int $height = 0;
 
     public function __construct(public readonly int $value)
     {
@@ -24,8 +25,13 @@ class AVLNode
         return $this->value === $node->value;
     }
 
-    public function valueIsGreaterThan(int $value)
+    public function itValueIsGreaterThan(int $value)
     {
         return $this->value > $value;
+    }
+
+    public function refreshHeight()
+    {
+        $this->height = 1 + max($this->left->height ?? 0, $this->right->height ?? 0);
     }
 }

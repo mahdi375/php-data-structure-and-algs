@@ -5,7 +5,9 @@ require "helpers.php";
 // require "./stack/touch.php";
 // require "./queue/touch.php";
 // require "./hashtable/touch.php";
-require "./binaryTrees/touch.php";
+// require "./binaryTrees/touch.php";
+
+require "./AVLTrees/touch.php";
 
 
 

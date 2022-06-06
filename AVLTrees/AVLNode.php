@@ -32,6 +32,21 @@ class AVLNode
 
     public function refreshHeight()
     {
-        $this->height = 1 + max($this->left->height ?? 0, $this->right->height ?? 0);
+        $this->height = 1 + max($this->left->height ?? -1, $this->right->height ?? -1);
+    }
+
+    public function balanceFactore(): int
+    {
+        return ($this->left->height ?? -1) - ($this->right->height ?? -1);
+    }
+
+    public function isLeftHeavy(): bool
+    {
+        return $this->balanceFactore() > 1;
+    }
+
+    public function isRightHeavy(): bool
+    {
+        return $this->balanceFactore() < -1;
     }
 }

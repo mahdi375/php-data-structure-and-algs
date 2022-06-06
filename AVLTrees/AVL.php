@@ -28,6 +28,12 @@ class AVL
 
         $root->refreshHeight();
 
+        if($root->isLeftHeavy()) {
+            echo "Left Heavy on {$root->value} \n";
+        } elseif ($root->isRightHeavy()) {
+            echo "Right Heavy on {$root->value} \n";
+        }
+
         return $root;
     }
 }

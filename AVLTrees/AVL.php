@@ -28,12 +28,23 @@ class AVL
 
         $root->refreshHeight();
 
-        if($root->isLeftHeavy()) {
-            echo "Left Heavy on {$root->value} \n";
-        } elseif ($root->isRightHeavy()) {
-            echo "Right Heavy on {$root->value} \n";
-        }
-
+        $this->balance($root);
+       
         return $root;
+    }
+
+    private function balance($root)
+    {
+        if($root->isLeftHeavy()) {
+            if($root->left->balanceFactore() < 0) {
+                echo "{$root->left->value} => LeftRotate & ";
+            }
+            echo "{$root->value} => RightRotate \n";
+        } elseif ($root->isRightHeavy()) {
+            if($root->right->balanceFactore() > 0) {
+                echo "{$root->right->value} RightRotate & ";
+            }
+            echo "{$root->value} => LeftRotate \n";
+        }
     }
 }

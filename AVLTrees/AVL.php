@@ -54,8 +54,8 @@ class AVL
 
     private function rotateLeft(AVLNode $root): AVLNode
     {
-        $child = clone $root->right;
-        $root->right = $child->left ? clone $child->left : null;
+        $child = $root->right;
+        $root->right = $child->left;
         $child->left = $root;
 
         $root->refreshHeight();
@@ -65,8 +65,8 @@ class AVL
 
     private function rotateRight(AVLNode $root): AVLNode
     {
-        $child = clone $root->left ;
-        $root->left = $child->right ? clone $child->right : null;
+        $child = $root->left ;
+        $root->left = $child->right;
         $child->right = $root;
 
         $root->refreshHeight();

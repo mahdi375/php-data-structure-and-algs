@@ -28,23 +28,49 @@ class AVL
 
         $root->refreshHeight();
 
-        $this->balance($root);
-       
-        return $root;
+        return $this->balance($root);
     }
 
     private function balance($root)
     {
         if($root->isLeftHeavy()) {
             if($root->left->balanceFactore() < 0) {
-                echo "{$root->left->value} => LeftRotate & ";
+                // $root->left => LeftRotate
+                $root->left = $this->rotateLeft($root->left);
             }
-            echo "{$root->value} => RightRotate \n";
+            // $root => RightRotate
+            $newRoot = $this->rotateRight($root);
         } elseif ($root->isRightHeavy()) {
             if($root->right->balanceFactore() > 0) {
-                echo "{$root->right->value} RightRotate & ";
+                // $root->right RightRotate
+                $root->right = $this->rotateRight($root->right);
             }
-            echo "{$root->value} => LeftRotate \n";
+            // $root => LeftRotate
+            $root = $this->rotateLeft($root);
         }
+
+        return $newRoot ?? $root;
+    }
+
+    private function rotateLeft(AVLNode $root): AVLNode
+    {
+        $child = clone $root->right;
+        $root->right = $child->left ? clone $child->left : null;
+        $child->left = $root;
+
+        $root->refreshHeight();
+        $child->refreshHeight();
+        return $child;
+    }
+
+    private function rotateRight(AVLNode $root): AVLNode
+    {
+        $child = clone $root->left ;
+        $root->left = $child->right ? clone $child->right : null;
+        $child->right = $root;
+
+        $root->refreshHeight();
+        $child->refreshHeight();
+        return $child;
     }
 }

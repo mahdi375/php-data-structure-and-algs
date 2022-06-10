@@ -17,5 +17,5 @@ $heap->insert(100);
 
 // print_r($heap->getItems());
 
-$arr = [4, 2, 9, 3, 15, 1, 7, 100];
+$arr = [5, 3, 8, 4, 1, 2];
 print_r(heapify($arr));

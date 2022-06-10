@@ -1,18 +1,19 @@
 <?php
 
 function heapify(array $arr): array {
-    foreach($arr as $index => $value) {
-        $maxIndexInSubtree = maxIndexTripleRexursion($arr, $index);
+    $lastParentIndex = (count($arr)/2) - 1;
+    for ($i = 0; $i <= $lastParentIndex; $i++) {
+        $maxIndexInSubtree = maxIndexTripleRecursion($arr, $i);
 
         $temp = $arr[$maxIndexInSubtree];
-        $arr[$maxIndexInSubtree] = $arr[$index];
-        $arr[$index] = $temp;
+        $arr[$maxIndexInSubtree] = $arr[$i];
+        $arr[$i] = $temp;
     }
 
     return $arr;
 }
 
-function maxIndexTripleRexursion($heap, $index)
+function maxIndexTripleRecursion($heap, $index)
 {
     $leftChildIndex = $index*2 + 1;
     $rightChildIndex = $index*2 + 2;
@@ -24,21 +25,21 @@ function maxIndexTripleRexursion($heap, $index)
     if(!$leftChild && !$rightChild) return $index;
 
     if(!$leftChild) {
-        $maxIndexRight = maxIndexTripleRexursion($heap, $rightChildIndex);
+        $maxIndexRight = maxIndexTripleRecursion($heap, $rightChildIndex);
         $maxRigh = $heap[$maxIndexRight];
 
         return $maxRigh > $item ? $maxIndexRight : $index;
     }
 
     if(!$rightChild) {
-        $maxIndexLeft = maxIndexTripleRexursion($heap, $leftChildIndex);
+        $maxIndexLeft = maxIndexTripleRecursion($heap, $leftChildIndex);
         $maxRigh = $heap[$maxIndexLeft];
 
         return $maxRigh > $item ? $maxIndexLeft : $index;
     }
 
-    $maxIndexRight = maxIndexTripleRexursion($heap, $rightChildIndex);
-    $maxIndexLeft = maxIndexTripleRexursion($heap, $leftChildIndex);
+    $maxIndexRight = maxIndexTripleRecursion($heap, $rightChildIndex);
+    $maxIndexLeft = maxIndexTripleRecursion($heap, $leftChildIndex);
 
     $maxRight = $heap[$maxIndexRight];
     $maxLeft = $heap[$maxIndexLeft];

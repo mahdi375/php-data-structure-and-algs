@@ -13,4 +13,6 @@ $heap->insert(24);
 $heap->insert(100);
 $heap->insert(7);
 
+$heap->remove();
+
 print_r($heap->getItems());

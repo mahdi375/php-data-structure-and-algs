@@ -1,18 +1,21 @@
 <?php
 
 require "./Heaps/Heap.php";
+require "./Heaps/functoins.php";
 
 $heap = new Heap();
-$heap->insert(8);
 $heap->insert(4);
+$heap->insert(2);
 $heap->insert(9);
-$heap->insert(5);
 $heap->insert(3);
-$heap->insert(6);
-$heap->insert(24);
-$heap->insert(100);
+$heap->insert(15);
+$heap->insert(1);
 $heap->insert(7);
+$heap->insert(100);
 
-$heap->remove();
+// $heap->remove();
 
-print_r($heap->getItems());
+// print_r($heap->getItems());
+
+$arr = [4, 2, 9, 3, 15, 1, 7, 100];
+print_r(heapify($arr));

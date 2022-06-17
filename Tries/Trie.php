@@ -43,17 +43,21 @@ class Trie
 
     private function deleteRec(TrieNode $root, string $word, int $current): void
     {
-        $node = $root->get(substr($word, $current, 1));
+        if ($current == strlen($word)) { // end of word
+            $root->notEndOfChild();
+            return;
+        }
 
-        if ($current == strlen($word)) return;
+        $char = substr($word, $current, 1);
+        $child = $root->get($char);
 
-        $this->deleteRec($node, $word, $current + 1);
+        if(!$child) return;
 
-        if (!$node->hasChild()) {
-            if($node->isEndOfWord && ($current+1 !== strlen($word))) return;
-            $root->deleteChild($node);
-        } else {
-            $node->notEndOfChild();
+        $this->deleteRec($child, $word, $current + 1);
+
+        // has not child and is not end of other words
+        if (!$child->hasChild() && !$child->isEndOfWord) {
+            $root->deleteChild($child);
         }
     }
 

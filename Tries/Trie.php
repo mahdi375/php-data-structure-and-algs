@@ -77,6 +77,35 @@ class Trie
         }
     }
 
+    public function autoComplete(string $search)
+    {
+        $current = $this->root;
+
+        foreach (str_split($search) as $char) {
+            if (!$current->has($char)) return false;
+            $current = $current->get($char);
+        }
+
+        $searchBeforLastChar = substr($search, 0, strlen($search)-1);
+
+        return $this->wordsAfter([], $current, $searchBeforLastChar);
+    }
+
+    private function wordsAfter(array $words, TrieNode $node, string $accumulatedString)
+    {
+        $accumulatedString .= $node->value;
+
+        if($node->isEndOfWord) {
+            $words[] = $accumulatedString;
+        }
+
+        foreach($node->children as $child) {
+            $words = $this->wordsAfter($words, $child, $accumulatedString);
+        }
+
+        return $words;
+    }
+
     public function __toString()
     {
         //FIXME:

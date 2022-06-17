@@ -11,6 +11,4 @@ $trie->insert("baby");
 $trie->insert("calendar");
 
 
-// var_dump($trie->contains(''));
-
-print_r(str_split(''));
+$trie->tranverse();

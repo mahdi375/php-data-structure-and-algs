@@ -36,6 +36,24 @@ class Trie
         return $current->isEndOfWord;
     }
 
+    public function tranverse()
+    {
+        $this->tranverseRec($this->root, '');
+    }
+
+    private function tranverseRec(TrieNode $root, string $string)
+    {
+        echo $root->value . " \n";
+
+        foreach($root->children as $node) {
+            $this->tranverseRec($node, $string.$node->value);
+        }
+
+        // if($root->isEndOfWord) {
+        //     echo $string . " \n";
+        // }
+    }
+
     public function __toString()
     {
         //FIXME:

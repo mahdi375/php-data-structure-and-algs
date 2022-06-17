@@ -43,12 +43,12 @@ class Trie
 
     private function tranverseRec(TrieNode $root, string $string)
     {
-        echo $root->value . " \n";
-
         foreach($root->children as $node) {
             $this->tranverseRec($node, $string.$node->value);
         }
 
+        echo $root->value . " \n";
+        
         // if($root->isEndOfWord) {
         //     echo $string . " \n";
         // }

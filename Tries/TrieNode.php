@@ -42,4 +42,21 @@ class TrieNode
         $this->isEndOfWord = true;
     }
 
+    public function notEndOfChild(): void
+    {
+        $this->isEndOfWord = false;
+    }
+
+    public function hasChild(): bool
+    {
+        return (bool) count($this->children);
+    }
+
+    public function deleteChild(self $node)
+    {
+        $key = array_search($node, $this->children);
+
+        unset($this->children[$key]);
+    }
+
 }

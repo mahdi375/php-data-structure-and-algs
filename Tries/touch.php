@@ -5,10 +5,15 @@ require "./Tries/Trie.php";
 $trie = new Trie();
 
 $trie->insert("cat");
+$trie->insert("cate");
 $trie->insert("car");
 $trie->insert("boy");
-$trie->insert("baby");
-$trie->insert("calendar");
 
+$trie->delete('cate');
+$trie->delete('car');
 
-$trie->tranverse();
+// $trie->tranverse();
+
+print_r($trie);
+
+// echo substr("mahdi", 1, 1);

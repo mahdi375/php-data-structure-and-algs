@@ -36,6 +36,27 @@ class Trie
         return $current->isEndOfWord;
     }
 
+    public function delete(string $word)
+    {
+        $this->deleteRec($this->root, $word, 0);
+    }
+
+    private function deleteRec(TrieNode $root, string $word, int $current): void
+    {
+        $node = $root->get(substr($word, $current, 1));
+
+        if ($current == strlen($word)) return;
+
+        $this->deleteRec($node, $word, $current + 1);
+
+        if (!$node->hasChild()) {
+            if($node->isEndOfWord && ($current+1 !== strlen($word))) return;
+            $root->deleteChild($node);
+        } else {
+            $node->notEndOfChild();
+        }
+    }
+
     public function tranverse()
     {
         $this->tranverseRec($this->root, '');
@@ -47,11 +68,9 @@ class Trie
             $this->tranverseRec($node, $string.$node->value);
         }
 
-        echo $root->value . " \n";
-        
-        // if($root->isEndOfWord) {
-        //     echo $string . " \n";
-        // }
+        if($root->isEndOfWord) {
+            echo $string . " \n";
+        }
     }
 
     public function __toString()

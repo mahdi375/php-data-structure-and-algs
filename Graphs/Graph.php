@@ -1,6 +1,7 @@
 <?php
 
 require "./Graphs/GraphNode.php";
+require "./hashtable/Set.php";
 
 class Graph
 {
@@ -38,6 +39,27 @@ class Graph
         $node = $this->list[$from];
         if(!($this->list[$to] ?? false)) throw new OutOfRangeException("{$to} was not found!");
         $node->removeEdge($to);
+    }
+
+    public function traverseDepthFirstUsingRecursion(string $from)
+    {
+        if(!($this->list[$from] ?? false)) throw new OutOfRangeException("{$from} not found");
+
+        return $this->depthFirstRec($from, new Set());
+    }
+
+    private function depthFirstRec(string $label, Set $visiteds)
+    {
+        $visiteds->add($label);
+
+        $node = $this->list[$label];
+        foreach($node->getEdges() as $label) {
+            if(!$visiteds->contains($label)) {
+                $visiteds = $this->depthFirstRec($label, $visiteds);
+            }
+        }
+
+        return $visiteds;
     }
 
     public function print()

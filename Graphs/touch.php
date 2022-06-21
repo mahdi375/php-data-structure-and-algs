@@ -4,14 +4,15 @@ require "./Graphs/Graph.php";
 
 $graph = new Graph();
 
-$graph->addNode('Mahdi');
-$graph->addNode('Milad');
-$graph->addNode('Ahmad');
+$graph->addNode('A');
+$graph->addNode('B');
+$graph->addNode('C');
+$graph->addNode('D');
 
-$graph->addEdge('Mahdi', 'Milad');
-$graph->addEdge('Mahdi', 'Ahmad');
-$graph->addEdge('Milad', 'Ahmad');
+$graph->addEdge('A', 'B');
+$graph->addEdge('B', 'D');
+$graph->addEdge('A', 'D');
+$graph->addEdge('C', 'A');
+$graph->addEdge('C', 'D');
 
-$graph->removeNode('Ahmad');
-
-$graph->print();
+print_r($graph->traverseDepthFirstUsingRecursion('A'));

@@ -26,7 +26,7 @@ class GraphNode
         }
     }
 
-    public function getEgdes()
+    public function getEdges()
     {
         return $this->edges;
     }

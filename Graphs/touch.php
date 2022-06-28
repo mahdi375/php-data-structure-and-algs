@@ -8,11 +8,15 @@ $graph->addNode('A');
 $graph->addNode('B');
 $graph->addNode('C');
 $graph->addNode('D');
+$graph->addNode('E');
+$graph->addNode('F');
 
 $graph->addEdge('A', 'B');
+$graph->addEdge('A', 'C');
 $graph->addEdge('B', 'D');
-$graph->addEdge('A', 'D');
-$graph->addEdge('C', 'A');
-$graph->addEdge('C', 'D');
+$graph->addEdge('B', 'F');
+$graph->addEdge('D', 'C');
+$graph->addEdge('C', 'E');
 
-print_r($graph->traverseDepthFirstUsingIteration('D'));
+// $graph->print();
+print_r($graph->traverseBreadthFirst('A'));

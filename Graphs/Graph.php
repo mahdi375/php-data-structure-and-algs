@@ -96,16 +96,11 @@ class Graph
         while(count($queue)) {
             $current = array_pop($queue); // delete from end (front of queue)
             $visiteds->add($current);
-            $node = $this->list[$from];
-
-            echo $current . " \n";
-            print_r($node->getEdges());
-            echo "*********** \n";
+            $node = $this->list[$current];
 
             foreach($node->getEdges() as $label) {
-                // echo "$current => $label \n";
                 if(!$visiteds->contains($label)) {
-                    array_push($queue, $label); // add to begining (end of queue)
+                    array_unshift($queue, $label); // add to begining (end of queue)
                 }
             }
         }

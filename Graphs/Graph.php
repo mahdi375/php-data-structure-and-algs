@@ -77,7 +77,7 @@ class Graph
 
             foreach($node->getEdges() as $label) {
                 if(!$visiteds->contains($label)) {
-                    array_push($stack, $label);
+                    array_unshift($stack, $label);
                 }
             }
         }

@@ -62,6 +62,29 @@ class Graph
         return $visiteds;
     }
 
+    public function traverseDepthFirstUsingIteration(string $from)
+    {
+        if(!($this->list[$from] ?? false)) throw new OutOfRangeException("{$from} not found");
+
+        $stack = [];
+        array_push($stack, $from);
+        $visiteds = new Set();
+
+        while (count($stack)) {
+            $current = array_pop($stack);
+            $visiteds->add($current);
+            $node = $this->list[$from];
+
+            foreach($node->getEdges() as $label) {
+                if(!$visiteds->contains($label)) {
+                    array_push($stack, $label);
+                }
+            }
+        }
+
+        return $visiteds;
+    }
+
     public function print()
     {
         foreach($this->list as $label => $node) {

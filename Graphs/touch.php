@@ -15,4 +15,4 @@ $graph->addEdge('A', 'D');
 $graph->addEdge('C', 'A');
 $graph->addEdge('C', 'D');
 
-print_r($graph->traverseDepthFirstUsingRecursion('A'));
+print_r($graph->traverseDepthFirstUsingIteration('D'));

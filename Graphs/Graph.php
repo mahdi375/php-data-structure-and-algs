@@ -71,13 +71,41 @@ class Graph
         $visiteds = new Set();
 
         while (count($stack)) {
-            $current = array_pop($stack);
+            $current = array_pop($stack);// delete from end
             $visiteds->add($current);
-            $node = $this->list[$from];
+            $node = $this->list[$current];
 
             foreach($node->getEdges() as $label) {
                 if(!$visiteds->contains($label)) {
-                    array_unshift($stack, $label);
+                    array_push($stack, $label); // add to end
+                }
+            }
+        }
+
+        return $visiteds;
+    }
+
+    public function traverseBreadthFirst(string $from)
+    {
+        if(!($this->list[$from] ?? false)) throw new OutOfRangeException("{$from} not found");
+
+        $queue = []; // we user php array as Queue;
+        array_push($queue, $from);
+        $visiteds = new Set();
+
+        while(count($queue)) {
+            $current = array_pop($queue); // delete from end (front of queue)
+            $visiteds->add($current);
+            $node = $this->list[$from];
+
+            echo $current . " \n";
+            print_r($node->getEdges());
+            echo "*********** \n";
+
+            foreach($node->getEdges() as $label) {
+                // echo "$current => $label \n";
+                if(!$visiteds->contains($label)) {
+                    array_push($queue, $label); // add to begining (end of queue)
                 }
             }
         }
@@ -88,7 +116,7 @@ class Graph
     public function print()
     {
         foreach($this->list as $label => $node) {
-            $edges = implode(", ", $node->getEgdes());
+            $edges = implode(", ", $node->getEdges());
             echo "{$label} neighbors are: {$edges} \n";
         }
     }

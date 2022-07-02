@@ -108,6 +108,35 @@ class Graph
         return $visiteds;
     }
 
+    public function topologicalSort()
+    {
+        $stack = [];// we use array instead of stack
+
+        foreach($this->list as $label => $node)
+        {
+            $stack = $this->topologicalSortRecu($node, $stack);
+        }
+
+        return $stack;
+    }
+
+    private function topologicalSortRecu(GraphNode $node, $stack)
+    {
+        if(in_array($node->label, $stack)) return $stack;
+
+        foreach($node->getEdges() as $label) {
+            $child = $this->list[$label];
+            $stack = $this->topologicalSortRecu($child, $stack);
+        }
+
+        // $allChildrenVisted = count($node->getEdges()) === count(array_intersect($node->getEdges(), $stack));
+        // if($allChildrenVisted) {
+            $stack[] = $node->label;
+        // }
+
+        return $stack;
+    }
+    
     public function print()
     {
         foreach($this->list as $label => $node) {

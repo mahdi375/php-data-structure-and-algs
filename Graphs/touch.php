@@ -4,19 +4,28 @@ require "./Graphs/Graph.php";
 
 $graph = new Graph();
 
-$graph->addNode('A');
-$graph->addNode('B');
-$graph->addNode('C');
-$graph->addNode('D');
-$graph->addNode('E');
-$graph->addNode('F');
+/**         
+ *          A1 
+ *      A    
+ *          A2 
+ *   X              P        
+ *          B 
+ */
 
-$graph->addEdge('A', 'B');
-$graph->addEdge('A', 'C');
-$graph->addEdge('B', 'D');
-$graph->addEdge('B', 'F');
-$graph->addEdge('D', 'C');
-$graph->addEdge('C', 'E');
+$graph->addNode('X');
+$graph->addNode('A');
+$graph->addNode('A1');
+$graph->addNode('A2');
+$graph->addNode('B');
+$graph->addNode('P');
+
+$graph->addEdge('X', 'A');
+$graph->addEdge('X', 'B');
+$graph->addEdge('B', 'P');
+$graph->addEdge('A', 'A2');
+$graph->addEdge('A', 'A1');
+$graph->addEdge('A1', 'P');
+$graph->addEdge('A2', 'P');
 
 // $graph->print();
-print_r($graph->traverseBreadthFirst('A'));
+print_r($graph->topologicalSort());

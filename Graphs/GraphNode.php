@@ -30,4 +30,9 @@ class GraphNode
     {
         return $this->edges;
     }
+
+    public function hasChild()
+    {
+        return (bool) count($this->edges);
+    }
 }

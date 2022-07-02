@@ -137,6 +137,42 @@ class Graph
         return $stack;
     }
     
+    public function hasCycle()
+    {
+        // we must use HashSet... :(
+        $visitings = [];
+        $visiteds = [];
+        
+        foreach($this->list as $label => $node) {
+            [$visitings, $visiteds, $hasCycle] = $this->hasCycleRecu($node, $visitings, $visiteds);
+
+            if($hasCycle) return true;
+        }
+
+        return false;
+    }
+
+    private function hasCycleRecu(GraphNode $node, $visitings, $visiteds, $hasCycle = false)
+    {
+        $hasCycle = in_array($node->label, $visitings) ? true : $hasCycle;
+
+        if(in_array($node->label, $visiteds) || $hasCycle) return [$visitings, $visiteds, $hasCycle];
+
+        $visitings[] = $node->label;
+        
+        foreach($node->getEdges() as $label) {
+            $child = $this->list[$label];
+            
+            [$visitings, $visiteds, $hasCycle] = $this->hasCycleRecu($child, $visitings, $visiteds, $hasCycle);
+        }
+
+        $index = array_search($node->label, $visitings);
+        unset($visitings[$index]);
+        $visiteds[] = $node->label;
+        
+        return [$visitings, $visiteds, $hasCycle];
+    }
+
     public function print()
     {
         foreach($this->list as $label => $node) {

@@ -34,6 +34,59 @@ class WeightGraph
         return $this->nodes;
     }
 
+    // Using => Dijkstra
+    public function shortesPath(string $from, string $to)
+    {
+        $distances = []; // $label => int $distance
+        $previous = []; // $label => $label;
+        $visited = [];// => $label
+
+        foreach($this->nodes as $label => $node) {
+            $distances[$label] = INF;
+        }
+        $distances[$from] = 0;
+
+        $queue = new SplPriorityQueue();
+        $queue->insert($from, 0);
+
+        while(!$queue->isEmpty()) {
+            $current = $this->nodes[$queue->extract()];
+            $visited[] = $current->getLabel();
+
+            foreach($current->getEdges() as $edge) {
+                // if reach $to => Done
+                if($current->getLabel() === $to) break;
+                
+                $neighbour = $this->nodes[$edge->to];
+                if(in_array($neighbour->getLabel(), $visited)) continue;
+                    
+                // total dis = dis(prev_node, source) + dis(current, prev_node)
+                $totalDist = $distances[$current->getLabel()] + $edge->weight;
+                    
+                // if total distance < latest distance
+                    // replace new distance and prev node
+                    // push to queue
+                if($totalDist < $distances[$neighbour->getLabel()]) {
+                    $priority = -$totalDist; // to less distance have more priority
+                    $queue->insert($neighbour->getLabel(), $priority);
+                    $distances[$neighbour->getLabel()] = $totalDist;
+                    $previous[$neighbour->getLabel()] = $current->getLabel();
+                }
+            }
+        }
+
+        $path = [];
+        $current = $to;
+        $path[] = $to;
+        
+        while(!in_array($from, $path)) {
+            $current = $previous[$current];
+            array_unshift($path, $current);
+        }
+
+        return ['distances' => $distances[$to], 'path' => $path];
+    }
+
     public function print()
     {
         foreach($this->nodes as $label => $node) {

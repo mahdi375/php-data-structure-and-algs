@@ -90,40 +90,35 @@ class WeightGraph
     public function hasCycle(): bool
     {
         $visited = []; // a Set of $labels
-        $visiting = []; // a Set of $labels
         $hasCycle = false;
 
         foreach($this->nodes as $label => $node) {
             if($hasCycle) break;
-            [$visited, $visiting, $hasCycle] = $this->hasCycleRecursion(null, $node, $visited, $visiting, $hasCycle);
+            if(in_array($label, $visited)) continue;
+            [$visited, $hasCycle] = $this->hasCycleRecursion(null, $node, $visited, $hasCycle);
         }
 
         return $hasCycle;
     }
 
-    private function hasCycleRecursion($parent = null, $node, $visited, $visiting, $hasCycle)
+    private function hasCycleRecursion($parent = null, $node, $visited, $hasCycle)
     {
-        if(in_array($node->getLabel(), $visiting)) {
+        if(in_array($node->getLabel(), $visited)) {
             $hasCycle = true;
         }
 
-        if($hasCycle) return [$visited, $visiting, $hasCycle];
-        
-        $visiting[] = $node->getLabel();
+        if($hasCycle) return [$visited, $hasCycle];
+
+        $visited[] = $node->getLabel();
 
         foreach($node->getEdges() as $label => $edge) {
             if($hasCycle) break;
             if($label === $parent) continue;
-            if(in_array($label, $visited)) continue;
             
-            [$visited, $visiting, $hasCycle] = $this->hasCycleRecursion($node->getLabel(), $this->nodes[$edge->to], $visited, $visiting, $hasCycle);
+            [$visited,  $hasCycle] = $this->hasCycleRecursion($node->getLabel(), $this->nodes[$edge->to], $visited, $hasCycle);
         }
 
-        $index = array_search($node->getLabel(), $visiting);
-        unset($visiting[$index]);
-        $visited[] = $node->getLabel();
-
-        return [$visited, $visiting, $hasCycle];
+        return [$visited, $hasCycle];
     }
 
     public function print()
